@@ -1,0 +1,23 @@
+{
+  "sensors": [
+    {
+      "name": "schema",
+      "kind": "schema",
+      "dir": "artifacts",
+      "schema": "schemas/artifact.schema.json",
+      "stages": ["post-edit", "pre-commit", "ci"]
+    },
+    {
+      "name": "no-secrets",
+      "kind": "command",
+      "command": "npx gitleaks detect --no-git --source artifacts --exit-code 1",
+      "parser": "generic",
+      "stages": ["pre-commit", "ci"],
+      "optional": true,
+      "fixHint": "Remove the secret and reference it via environment/key vault instead."
+    }
+  ],
+  "review": { "command": "claude", "argsTemplate": ["-p", "{prompt}"] },
+  "guides": { "canonical": "AGENTS.md", "skillsDir": "skills" },
+  "report": { "maxChars": 6000 }
+}
