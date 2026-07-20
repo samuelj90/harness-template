@@ -1,0 +1,45 @@
+{
+  "sensors": [
+    {
+      "name": "lint",
+      "kind": "command",
+      "command": "ruff check . --output-format json",
+      "parser": "ruff",
+      "stages": ["post-edit", "pre-commit", "ci"],
+      "fixHint": "Fix the rule violation; do not add a noqa comment."
+    },
+    {
+      "name": "types",
+      "kind": "command",
+      "command": "mypy src",
+      "parser": "mypy",
+      "stages": ["post-edit", "pre-commit", "ci"]
+    },
+    {
+      "name": "tests",
+      "kind": "command",
+      "command": "pytest -q",
+      "parser": "generic",
+      "stages": ["pre-commit", "ci"],
+      "fixHint": "Make the failing test pass by fixing the code, not by weakening the test."
+    },
+    {
+      "name": "architecture",
+      "kind": "command",
+      "command": "lint-imports",
+      "parser": "generic",
+      "stages": ["pre-commit", "ci"],
+      "fixHint": "Respect the contracts in .importlinter; move code rather than adding a forbidden import."
+    },
+    {
+      "name": "review",
+      "kind": "review",
+      "skill": "skills/code-review/SKILL.md",
+      "stages": ["ci"],
+      "optional": true
+    }
+  ],
+  "review": { "command": "claude", "argsTemplate": ["-p", "{prompt}"] },
+  "guides": { "canonical": "AGENTS.md", "skillsDir": "skills" },
+  "report": { "maxChars": 6000 }
+}

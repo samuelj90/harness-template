@@ -1,0 +1,10 @@
+[importlinter]
+root_package = src
+
+[importlinter:contract:domain-purity]
+name = domain must not import adapters or entrypoints
+type = forbidden
+source_modules = src.domain
+forbidden_modules =
+    src.adapters
+    src.entrypoints
